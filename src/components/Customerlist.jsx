@@ -28,13 +28,15 @@ function Customerlist() {
 
   return (
     <>
+      <h2 style={{ textAlign: "center", marginTop: "50px", color: "#034999" }}>
+        CUSTOMER LIST
+      </h2>
       <div className="ag-theme-material" style={{ height: 600, width: 1300 }}>
         <AgGridReact
           rowData={customers}
-          floatingFilter={true} // Enable floating filters
           columnDefs={colDefs}
           pagination={true}
-          paginationPageSize={20}
+          paginationPageSize={10}
         />
       </div>
     </>

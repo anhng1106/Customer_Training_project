@@ -24,6 +24,9 @@ function Trainerlist() {
 
   return (
     <>
+      <h2 style={{ textAlign: "center", marginTop: "50px", color: "#037ffc" }}>
+        Training list
+      </h2>
       <div className="ag-theme-material" style={{ height: 600, width: 1300 }}>
         <AgGridReact
           rowData={trainings}

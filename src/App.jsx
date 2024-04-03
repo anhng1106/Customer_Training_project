@@ -3,8 +3,13 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Customerlist from "./components/Customerlist";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
@@ -16,9 +21,14 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 
+// Your component imports
+import Customerlist from "./components/Customerlist";
+import Trainerlist from "./components/Trainerlist";
+
 function App() {
   // State variable to manage the open/close state of the menu
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   // Function to handle opening the menu
   const handleMenuOpen = (event) => {
@@ -26,8 +36,13 @@ function App() {
   };
 
   // Function to handle closing the menu
-  const handleMenuClose = () => {
+  const handleMenuClose = (event) => {
     setAnchorEl(null);
+  };
+
+  const handleNavigation = (path) => {
+    handleMenuClose();
+    navigate(path);
   };
 
   return (
@@ -73,35 +88,49 @@ function App() {
         onClose={handleMenuClose} // Close the menu when clicked outside
       >
         {/* Menu items */}
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem
+          onClick={() => handleNavigation("/customerlist")}
+          component={Link}
+          to="/customerlist"
+        >
           <ListItemIcon>
             <AccountCircleIcon fontSize="small" />
           </ListItemIcon>
           Customers
         </MenuItem>
 
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem
+          onClick={() => handleNavigation("/traininglist")}
+          component={Link}
+          to="/traininglist"
+        >
           <ListItemIcon>
             <DirectionsRunIcon fontSize="small" />
           </ListItemIcon>
           Trainings
         </MenuItem>
 
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleNavigation}>
           <ListItemIcon>
             <CalendarTodayIcon fontSize="small" />
           </ListItemIcon>
           Calendar
         </MenuItem>
 
-        <MenuItem onClick={handleMenuClose}>
+        <MenuItem onClick={handleNavigation}>
           <ListItemIcon>
             <BarChartIcon fontSize="small" />
           </ListItemIcon>
           Statistics
         </MenuItem>
       </Menu>
-      <Customerlist />
+
+      <Router>
+        <Routes>
+          <Route path="/customerlist" element={<Customerlist />} />
+          <Route path="/traininglist" element={<Trainerlist />} />
+        </Routes>
+      </Router>
     </Box>
   );
 }
