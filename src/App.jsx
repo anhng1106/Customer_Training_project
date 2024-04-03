@@ -16,7 +16,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Switch } from "react-router-dom";
 
 function App() {
   // State variable to manage the open/close state of the menu
