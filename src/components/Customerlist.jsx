@@ -7,8 +7,8 @@ import { getCustomers } from "../customerapi";
 function Customerlist() {
   const [customers, setCustomers] = useState([]);
   const [colDefs, setColDefs] = useState([
-    { field: "firstname", filter: true },
-    { field: "lastname", filter: true },
+    { field: "firstname", filter: true, floatingFilter: true },
+    { field: "lastname", filter: true, floatingFilter: true },
     { field: "streetaddress", filter: true },
     { field: "postcode", filter: true, width: 100 },
     { field: "city", filter: true, width: 100 },
@@ -31,6 +31,7 @@ function Customerlist() {
       <div className="ag-theme-material" style={{ height: 600, width: 1300 }}>
         <AgGridReact
           rowData={customers}
+          floatingFilter={true} // Enable floating filters
           columnDefs={colDefs}
           pagination={true}
           paginationPageSize={20}

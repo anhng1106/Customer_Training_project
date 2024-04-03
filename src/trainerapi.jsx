@@ -1,4 +1,4 @@
-export const getTrainings = () => {
+export const getTrainers = () => {
   return fetch(
     "https://customerrestservice-personaltraining.rahtiapp.fi/api/trainings"
   ).then((response) => {

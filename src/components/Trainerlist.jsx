@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { getTrainings } from "../trainingapi";
+import { getTrainers } from "../trainerapi";
 
-function Traininglist() {
-  const [trainings, setTrainings] = useState([]);
+function Trainerlist() {
+  const [trainers, setTrainers] = useState([]);
   const [colDefs, setColDefs] = useState([
     { field: "date", filter: true },
     { field: "duration", filter: true },
@@ -13,12 +13,12 @@ function Traininglist() {
   ]);
 
   useEffect(() => {
-    fetchTrainings();
+    fetchTrainers();
   }, []);
 
-  const fetchTrainings = () => {
-    getTrainings()
-      .then((data) => setTrainings(data._embedded.trainings))
+  const fetchTrainers = () => {
+    getTrainers()
+      .then((data) => setTrainers(data._embedded.trainings))
       .catch((err) => console.log(err));
   };
 
@@ -36,4 +36,4 @@ function Traininglist() {
   );
 }
 
-export default Traininglist;
+export default Trainerlist;
