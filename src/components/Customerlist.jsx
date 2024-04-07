@@ -9,11 +9,11 @@ function Customerlist() {
   const [colDefs, setColDefs] = useState([
     { field: "firstname", filter: true, floatingFilter: true },
     { field: "lastname", filter: true, floatingFilter: true },
-    { field: "streetaddress", filter: true },
-    { field: "postcode", filter: true, width: 100 },
-    { field: "city", filter: true, width: 100 },
-    { field: "email", filter: true },
+    { field: "email", filter: true, width: 250 },
     { field: "phone", filter: true },
+    { field: "streetaddress", filter: true, width: 250 },
+    { field: "postcode", filter: true, width: 200 },
+    { field: "city", filter: true, width: 200 },
   ]);
 
   useEffect(() => {
@@ -28,10 +28,17 @@ function Customerlist() {
 
   return (
     <>
-      <h2 style={{ textAlign: "center", marginTop: "50px", color: "#034999" }}>
+      <h2 style={{ textAlign: "center", marginTop: "100px", color: "#034999" }}>
         CUSTOMER LIST
       </h2>
-      <div className="ag-theme-material" style={{ height: 600, width: 1300 }}>
+      <div
+        className="ag-theme-material"
+        style={{
+          height: "calc(100vh - 20px)",
+          width: "calc(100vw - 20px)",
+          padding: "10px",
+        }}
+      >
         <AgGridReact
           rowData={customers}
           columnDefs={colDefs}

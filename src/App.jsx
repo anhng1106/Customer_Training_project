@@ -8,7 +8,7 @@ import {
   Routes,
   Route,
   Link,
-  useNavigate,
+  BrowserRouter,
 } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -23,12 +23,13 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 
 // Your component imports
 import Customerlist from "./components/Customerlist";
-import Trainerlist from "./components/Trainerlist";
+import Traininglist from "./components/Traininglist";
+import Calendar from "./components/Calendar";
+import Statistic from "./components/Statistic";
 
 function App() {
   // State variable to manage the open/close state of the menu
   const [anchorEl, setAnchorEl] = useState(null);
-  const navigate = useNavigate();
 
   // Function to handle opening the menu
   const handleMenuOpen = (event) => {
@@ -36,102 +37,101 @@ function App() {
   };
 
   // Function to handle closing the menu
-  const handleMenuClose = (event) => {
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  const handleNavigation = (path) => {
+  const handleNavigate = (path) => {
     handleMenuClose();
-    navigate(path);
+    useNavigate();
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleMenuOpen} // Open the menu when clicked
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, fontWeight: "bold" }}
-          >
-            Personal Trainer
-          </Typography>
-        </Toolbar>
-      </AppBar>
+    <BrowserRouter>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar>
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenuOpen} // Open the menu when clicked
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, fontWeight: "bold" }}
+            >
+              Personal Trainer
+            </Typography>
+          </Toolbar>
+        </AppBar>
 
-      {/* Menu component */}
-      <Menu
-        id="menu-appbar"
-        anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: "bottom", // Anchor menu to bottom of button
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose} // Close the menu when clicked outside
-      >
-        {/* Menu items */}
-        <MenuItem
-          onClick={() => handleNavigation("/customerlist")}
-          component={Link}
-          to="/customerlist"
+        {/* Menu component */}
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "bottom", // Anchor menu to bottom of button
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose} // Close the menu when clicked outside
         >
-          <ListItemIcon>
-            <AccountCircleIcon fontSize="small" />
-          </ListItemIcon>
-          Customers
-        </MenuItem>
+          {/* Menu items */}
+          <MenuItem onClick={handleMenuClose} component={Link} to="/">
+            <ListItemIcon>
+              <AccountCircleIcon fontSize="small" />
+            </ListItemIcon>
+            Customers
+          </MenuItem>
 
-        <MenuItem
-          onClick={() => handleNavigation("/traininglist")}
-          component={Link}
-          to="/traininglist"
-        >
-          <ListItemIcon>
-            <DirectionsRunIcon fontSize="small" />
-          </ListItemIcon>
-          Trainings
-        </MenuItem>
+          <MenuItem
+            onClick={handleMenuClose}
+            component={Link}
+            to="/traininglist"
+          >
+            <ListItemIcon>
+              <DirectionsRunIcon fontSize="small" />
+            </ListItemIcon>
+            Trainings
+          </MenuItem>
 
-        <MenuItem onClick={handleNavigation}>
-          <ListItemIcon>
-            <CalendarTodayIcon fontSize="small" />
-          </ListItemIcon>
-          Calendar
-        </MenuItem>
+          <MenuItem onClick={handleMenuClose} component={Link} to="/calendar">
+            <ListItemIcon>
+              <CalendarTodayIcon fontSize="small" />
+            </ListItemIcon>
+            Calendar
+          </MenuItem>
 
-        <MenuItem onClick={handleNavigation}>
-          <ListItemIcon>
-            <BarChartIcon fontSize="small" />
-          </ListItemIcon>
-          Statistics
-        </MenuItem>
-      </Menu>
+          <MenuItem onClick={handleMenuClose} component={Link} to="/statistic">
+            <ListItemIcon>
+              <BarChartIcon fontSize="small" />
+            </ListItemIcon>
+            Statistics
+          </MenuItem>
+        </Menu>
 
-      <Router>
         <Routes>
-          <Route path="/customerlist" element={<Customerlist />} />
-          <Route path="/traininglist" element={<Trainerlist />} />
+          <Route path="/" exact Component={Customerlist} />
+          <Route path="/traininglist" exact Component={Traininglist} />
+          <Route path="/calendar" exact Component={Calendar} />
+          <Route path="/statistic" exact Component={Statistic} />
+          <Route Component={Error} />
         </Routes>
-      </Router>
-    </Box>
+      </Box>
+    </BrowserRouter>
   );
 }
 
