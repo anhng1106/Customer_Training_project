@@ -25,22 +25,10 @@ function Traininglist() {
   }, []);
 
   const fetchTrainings = async () => {
-    // getTrainings()
-    //   .then((data) =>
-    //     setTrainings(
-    //       data._embedded.trainings.map((training) => ({
-    //         ...training,
-    //         customerName: training._links.customer.lastname,
-    //       }))
-    //     )
-    //   )
-    //   .catch((err) => console.log(err));
-
     try {
       const data = await getTrainings();
       const trainingsWithCustomer = await Promise.all(
         data._embedded.trainings.map(async (training) => {
-          // Assume getCustomerTraining fetches customer data from URL
           const customerData = await fetch(training._links.customer.href).then(
             (response) => response.json()
           );
@@ -55,14 +43,6 @@ function Traininglist() {
       console.log(err);
     }
   };
-
-  // const fetchCustomerTrainings = () => {
-  //   getCustomerTraining()
-  //     .then((data) =>
-  //       setCustomerTraining(data._embedded.trainings._links.customer.lastname)
-  //     )
-  //     .catch((err) => console.log(err));
-  // };
 
   return (
     <>
