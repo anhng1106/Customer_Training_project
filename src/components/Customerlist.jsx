@@ -9,6 +9,7 @@ import {
   deleteCustomer,
 } from "../customerapi";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
@@ -31,13 +32,15 @@ function Customerlist() {
     },
     {
       cellRenderer: (params) => (
-        <IconButton
-          aria-label="delete"
-          color="error"
-          onClick={() => deleteCustomers(params.data._links.customer.href)}
-        >
-          <DeleteIcon />
-        </IconButton>
+        <Tooltip title="Delete customer">
+          <IconButton
+            aria-label="delete"
+            color="error"
+            onClick={() => deleteCustomers(params.data._links.customer.href)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       ),
       width: 150,
     },
@@ -63,15 +66,6 @@ function Customerlist() {
 
   const updatedCustomer = (url, updatedCustomer) => {
     if (window.confirm("Do you want to update this customer?")) {
-      // fetch(url, {
-      //   method: "PUT",
-      //   headers: { "content-type": "application/json" },
-      //   body: JSON.stringify(updatedCustomer),
-      // })
-      //   .then((response) => {
-      //     if (!response.ok) throw new Error("Error when updating customer");
-      //     return response.json();
-      //   })
       updatedCustomers(url, updatedCustomer)
         .then(() => fetchCustomers())
         .catch((err) => console.log(err));

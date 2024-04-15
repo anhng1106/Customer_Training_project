@@ -7,6 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import EditIcon from "@mui/icons-material/Edit";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function EditCustomer({ data, updatedCustomer }) {
   const [open, setOpen] = useState(false);
@@ -44,9 +45,11 @@ export default function EditCustomer({ data, updatedCustomer }) {
 
   return (
     <>
-      <IconButton aria-label="edit" color="info" onClick={handleClickOpen}>
-        <EditIcon />
-      </IconButton>
+      <Tooltip title="Edit customer">
+        <IconButton aria-label="edit" color="info" onClick={handleClickOpen}>
+          <EditIcon />
+        </IconButton>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Update Customer</DialogTitle>
         <DialogContent>
