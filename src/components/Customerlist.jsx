@@ -9,9 +9,9 @@ function Customerlist() {
   const [colDefs, setColDefs] = useState([
     { field: "firstname", filter: true, floatingFilter: true },
     { field: "lastname", filter: true, floatingFilter: true },
-    { field: "email", filter: true, width: 250 },
+    { field: "email", filter: true, width: 200 },
     { field: "phone", filter: true },
-    { field: "streetaddress", filter: true, width: 250 },
+    { field: "streetaddress", filter: true, width: 200 },
     { field: "postcode", filter: true, width: 200 },
     { field: "city", filter: true, width: 200 },
   ]);
@@ -44,6 +44,9 @@ function Customerlist() {
           columnDefs={colDefs}
           pagination={true}
           paginationPageSize={10}
+          onFirstDataRendered={(params) => {
+            params.api.sizeColumnsToFit();
+          }}
         />
       </div>
     </>

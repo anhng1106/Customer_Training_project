@@ -66,3 +66,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+#calendar {
+  max-width: auto;
+  margin-top: 5%;
+  position: absolute; /* Positioned relative to the viewport */
+  top: 0; /* Zero distance from the top of the viewport */
+  left: 0; /* Zero distance from the left of the viewport */
+  right: 0; /* Zero distance from the right of the viewport */
+  bottom: 0; /* Zero distance from the bottom of the viewport */
+  background: #fff; /* Optional: just to make it visible */
+}

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { getTrainings, getCustomerTraining } from "../trainingapi";
+import { getTrainings } from "../trainingapi";
 import dayjs from "dayjs";
 
 function Traininglist() {
   const [trainings, setTrainings] = useState([]);
   const [colDefs, setColDefs] = useState([
-    { field: "activity", filter: true },
+    { field: "activity", filter: true, floatingFilter: true },
     {
       field: "date",
       filter: true,
@@ -16,7 +16,12 @@ function Traininglist() {
         dayjs(params.value).format("DD.MM.YYYY HH:mm"),
     },
     { field: "duration", filter: true },
-    { field: "customerName", headerName: "Customer Name", filter: true },
+    {
+      field: "customerName",
+      headerName: "Customer Name",
+      filter: true,
+      floatingFilter: true,
+    },
   ]);
 
   useEffect(() => {
@@ -54,7 +59,7 @@ function Traininglist() {
         style={{
           height: "calc(100vh - 20px)",
           width: "calc(100vw - 20px)",
-          padding: "10px",
+          padding: "20px",
         }}
       >
         <AgGridReact
@@ -62,6 +67,9 @@ function Traininglist() {
           columnDefs={colDefs}
           pagination={true}
           paginationPageSize={20}
+          onFirstDataRendered={(params) => {
+            params.api.sizeColumnsToFit();
+          }}
         />
       </div>
     </>

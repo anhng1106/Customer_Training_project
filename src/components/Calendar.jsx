@@ -1,5 +1,55 @@
+import { Calendar as FullCalendar } from "@fullcalendar/core";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import dayGridPlugin from "@fullcalendar/daygrid"; // Import dayGridPlugin
+import { useState, useEffect } from "react";
+import { getTrainings } from "../trainingapi";
+
 function Calendar() {
-  return <h3>Hello</h3>;
+  const [trainings, setTrainings] = useState([]);
+
+  useEffect(() => {
+    fetchTrainings();
+  }, []);
+
+  const fetchTrainings = async () => {
+    try {
+      const data = await getTrainings();
+      const formattedTrainings = data._embedded.trainings.map((training) => {
+        return {
+          title: training.activity,
+          start: training.date, // Assuming 'date' is a proper ISO string or Date object.
+          end: new Date(
+            new Date(training.date).getTime() + training.duration * 60000
+          ), // Add duration to start date.
+          // other event properties
+        };
+      });
+      setTrainings(formattedTrainings);
+    } catch (error) {
+      console.error("Failed to fetch trainings:", error);
+    }
+  };
+
+  useEffect(() => {
+    const calendarEl = document.getElementById("calendar");
+
+    if (calendarEl) {
+      const calendar = new FullCalendar(calendarEl, {
+        plugins: [dayGridPlugin, timeGridPlugin],
+        initialView: "dayGridMonth",
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
+        },
+        events: trainings, // Assign the formatted training data as events
+      });
+
+      calendar.render();
+    }
+  }, [trainings]); // Re-render the calendar whenever the trainings data changes
+
+  return <div id="calendar"></div>;
 }
 
 export default Calendar;
