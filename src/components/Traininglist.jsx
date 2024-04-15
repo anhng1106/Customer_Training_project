@@ -51,7 +51,7 @@ function Traininglist() {
 
   return (
     <>
-      <h2 style={{ textAlign: "center", marginTop: "100px", color: "#034999" }}>
+      <h2 style={{ textAlign: "center", marginTop: "70px", color: "#034999" }}>
         TRAINING LIST
       </h2>
       <div

@@ -41,11 +41,6 @@ function App() {
     setAnchorEl(null);
   };
 
-  const handleNavigate = (path) => {
-    handleMenuClose();
-    useNavigate();
-  };
-
   return (
     <BrowserRouter>
       <Box sx={{ flexGrow: 1 }}>

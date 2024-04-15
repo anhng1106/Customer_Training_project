@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { getCustomers } from "../customerapi";
+import { getCustomers, addCustomers } from "../customerapi";
+import AddCustomer from "./AddCustomer";
 
 function Customerlist() {
   const [customers, setCustomers] = useState([]);
@@ -20,15 +21,23 @@ function Customerlist() {
     fetchCustomers();
   }, []);
 
+  //list all customers
   const fetchCustomers = () => {
     getCustomers()
       .then((data) => setCustomers(data._embedded.customers))
       .catch((err) => console.log(err));
   };
 
+  //add new customers
+  const addCustomer = (newCustomer) => {
+    addCustomers(newCustomer)
+      .then(() => fetchCustomers())
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
-      <h2 style={{ textAlign: "center", marginTop: "100px", color: "#034999" }}>
+      <h2 style={{ textAlign: "center", marginTop: "70px", color: "#034999" }}>
         CUSTOMER LIST
       </h2>
       <div
@@ -39,6 +48,7 @@ function Customerlist() {
           padding: "10px",
         }}
       >
+        <AddCustomer addCustomer={addCustomer} />
         <AgGridReact
           rowData={customers}
           columnDefs={colDefs}
