@@ -23,3 +23,21 @@ export const addCustomers = (newCustomer) => {
     return response.json();
   });
 };
+
+export const updatedCustomers = (url, updatedCustomer) => {
+  return fetch(url, {
+    method: "PUT",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(updatedCustomer),
+  }).then((response) => {
+    if (!response.ok) throw new Error("Error when updating customer");
+    return response.json();
+  });
+};
+
+export const deleteCustomer = (url) => {
+  return fetch(url, { method: "DELETE" }).then((response) => {
+    if (!response.ok) throw new Error("Error in deletion: " + error.statusText);
+    return response.json();
+  });
+};

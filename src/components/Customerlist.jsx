@@ -2,8 +2,16 @@ import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { getCustomers, addCustomers } from "../customerapi";
+import {
+  getCustomers,
+  addCustomers,
+  updatedCustomers,
+  deleteCustomer,
+} from "../customerapi";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import AddCustomer from "./AddCustomer";
+import EditCustomer from "./EditCustomer";
 
 function Customerlist() {
   const [customers, setCustomers] = useState([]);
@@ -15,6 +23,25 @@ function Customerlist() {
     { field: "streetaddress", filter: true, width: 200 },
     { field: "postcode", filter: true, width: 200 },
     { field: "city", filter: true, width: 200 },
+    {
+      cellRenderer: (params) => (
+        <EditCustomer data={params.data} updatedCustomer={updatedCustomer} />
+      ),
+      width: 120,
+    },
+    {
+      cellRenderer: (params) => (
+        <IconButton
+          size="small"
+          color="error"
+          onClick={() => deleteCar(params.data._links.customer.href)}
+          startIcon={<DeleteIcon />}
+        >
+          Delete
+        </IconButton>
+      ),
+      width: 150,
+    },
   ]);
 
   useEffect(() => {
@@ -33,6 +60,31 @@ function Customerlist() {
     addCustomers(newCustomer)
       .then(() => fetchCustomers())
       .catch((err) => console.log(err));
+  };
+
+  const updatedCustomer = (url, updatedCustomer) => {
+    if (window.confirm("Do you want to update this customer?")) {
+      // fetch(url, {
+      //   method: "PUT",
+      //   headers: { "content-type": "application/json" },
+      //   body: JSON.stringify(updatedCustomer),
+      // })
+      //   .then((response) => {
+      //     if (!response.ok) throw new Error("Error when updating customer");
+      //     return response.json();
+      //   })
+      updatedCustomers(url, updatedCustomer)
+        .then(() => fetchCustomers())
+        .catch((err) => console.log(err));
+    }
+  };
+
+  const deleteCustomer = (url) => {
+    if (window.confirm("Are you sure?")) {
+      deleteCustomer(url)
+        .then(() => fetchCustomers())
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
