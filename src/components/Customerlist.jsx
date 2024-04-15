@@ -32,12 +32,11 @@ function Customerlist() {
     {
       cellRenderer: (params) => (
         <IconButton
-          size="small"
+          aria-label="delete"
           color="error"
-          onClick={() => deleteCar(params.data._links.customer.href)}
-          startIcon={<DeleteIcon />}
+          onClick={() => deleteCustomers(params.data._links.customer.href)}
         >
-          Delete
+          <DeleteIcon />
         </IconButton>
       ),
       width: 150,
@@ -79,7 +78,7 @@ function Customerlist() {
     }
   };
 
-  const deleteCustomer = (url) => {
+  const deleteCustomers = (url) => {
     if (window.confirm("Are you sure?")) {
       deleteCustomer(url)
         .then(() => fetchCustomers())
