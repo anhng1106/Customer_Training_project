@@ -28,7 +28,7 @@ function Customerlist() {
     { field: "city", filter: true, width: 200 },
     {
       cellRenderer: (params) => (
-        <AddTraining addTraining={addTraining} customer={params.data} />
+        <AddTraining addNewTraining={addTraining} customer={params.data} />
       ),
       width: 120,
     },

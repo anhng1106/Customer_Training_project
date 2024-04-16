@@ -47,13 +47,6 @@ function Traininglist() {
       .catch((err) => console.log(err));
   };
 
-  //add new trainings
-  const addTraining = (newTraining) => {
-    addTrainings(newTraining)
-      .then(() => fetchTrainings())
-      .catch((err) => console.log(err));
-  };
-
   return (
     <>
       <h2 style={{ textAlign: "center", marginTop: "70px", color: "#034999" }}>

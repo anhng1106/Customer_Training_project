@@ -23,8 +23,6 @@ export default function AddTraining(props) {
     customer: props.customer._links.customer.href,
   });
 
-  console.log(1111111111, training.customer);
-
   const handleCustomerChange = (event) => {
     setTraining({ ...training, [event.target.name]: event.target.value });
   };
@@ -51,8 +49,9 @@ export default function AddTraining(props) {
       ...training,
       customer: props.customer._links.customer.href,
     };
-    AddTraining(newTraining);
+    props.addNewTraining(newTraining);
     handleClose();
+    console.log(1111111, newTraining);
   };
 
   return (

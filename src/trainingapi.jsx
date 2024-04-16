@@ -12,7 +12,7 @@ export const getTrainings = () => {
 
 export const addTrainings = (newTraining) => {
   return fetch(
-    "https://customerrestservice-personaltraining.rahtiapp.fi/gettrainings",
+    "https://customerrestservice-personaltraining.rahtiapp.fi/api/trainings",
     {
       method: "POST",
       headers: { "content-type": "application/json" },
