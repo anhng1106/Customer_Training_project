@@ -64,6 +64,7 @@ function Customerlist() {
       .catch((err) => console.log(err));
   };
 
+  //edit customer
   const updatedCustomer = (url, updatedCustomer) => {
     if (window.confirm("Do you want to update this customer?")) {
       updatedCustomers(url, updatedCustomer)
@@ -72,6 +73,7 @@ function Customerlist() {
     }
   };
 
+  //delete customer
   const deleteCustomers = (url) => {
     if (window.confirm("Are you sure?")) {
       deleteCustomer(url)

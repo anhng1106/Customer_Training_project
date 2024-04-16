@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { getTrainings } from "../trainingapi";
+import { getTrainings, addTrainings } from "../trainingapi";
 import dayjs from "dayjs";
+
+import AddTraining from "./AddTraining";
 
 function Traininglist() {
   const [trainings, setTrainings] = useState([]);
+
   const [colDefs, setColDefs] = useState([
     { field: "activity", filter: true, floatingFilter: true },
     {
@@ -26,27 +29,29 @@ function Traininglist() {
 
   useEffect(() => {
     fetchTrainings();
-    // fetchCustomerTrainings();
   }, []);
 
-  const fetchTrainings = async () => {
-    try {
-      const data = await getTrainings();
-      const trainingsWithCustomer = await Promise.all(
-        data._embedded.trainings.map(async (training) => {
-          const customerData = await fetch(training._links.customer.href).then(
-            (response) => response.json()
-          );
+  //list all trainings
+  const fetchTrainings = () => {
+    getTrainings()
+      .then((data) => {
+        // Map over the data to include customerName
+        const newData = data.map((training) => {
           return {
             ...training,
-            customerName: `${customerData.firstname} ${customerData.lastname}`,
+            customerName: `${training.customer.firstname} ${training.customer.lastname}`,
           };
-        })
-      );
-      setTrainings(trainingsWithCustomer);
-    } catch (err) {
-      console.log(err);
-    }
+        });
+        setTrainings(newData);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  //add new trainings
+  const addTraining = (newTraining) => {
+    addTrainings(newTraining)
+      .then(() => fetchTrainings())
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -62,6 +67,7 @@ function Traininglist() {
           padding: "20px",
         }}
       >
+        <AddTraining addTraining={addTraining} />
         <AgGridReact
           rowData={trainings}
           columnDefs={colDefs}

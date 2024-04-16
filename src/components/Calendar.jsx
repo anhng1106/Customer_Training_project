@@ -14,7 +14,7 @@ function Calendar() {
   const fetchTrainings = async () => {
     try {
       const data = await getTrainings();
-      const formattedTrainings = data._embedded.trainings.map((training) => {
+      const formattedTrainings = data.map((training) => {
         return {
           title: training.activity,
           start: training.date, // Assuming 'date' is a proper ISO string or Date object.
