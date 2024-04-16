@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -11,35 +11,22 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { getCustomers } from "../customerapi";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
 
-export default function AddTraining({ addTraining }) {
+export default function AddTraining(props) {
   const [open, setOpen] = useState(false);
   const [training, setTraining] = useState({
     date: dayjs(),
     duration: "",
     activity: "",
-    customer: "",
+    customer: props.customer._links.customer.href,
   });
-  const [customers, setCustomers] = useState([]);
 
-  useEffect(() => {
-    // Fetch customers when the component mounts
-    getCustomers()
-      .then((data) => {
-        setCustomers(data._embedded.customers); // Assuming response is the array of customers
-      })
-      .catch((error) => console.error(error));
-  }, []); // Empty dependency array to run only once on mount
+  console.log(1111111111, training.customer);
 
   const handleCustomerChange = (event) => {
-    const selectedCustomer = event.target.value; // This would be the customer's ID
-    setTraining({ ...training, customer: selectedCustomer });
+    setTraining({ ...training, [event.target.name]: event.target.value });
   };
 
   const handleClickOpen = () => {
@@ -58,73 +45,48 @@ export default function AddTraining({ addTraining }) {
       !training.customer
     ) {
       alert("Please complete all fields.");
-      return;
+      return; //return to Save button, ends the function
     }
-    addTraining();
+    const newTraining = {
+      ...training,
+      customer: props.customer._links.customer.href,
+    };
+    AddTraining(newTraining);
     handleClose();
   };
 
-  console.log(11111111, customers);
   return (
     <>
-      <Button
-        variant="contained" // Change from 'outlined' to 'contained' for a filled button
-        color="primary" // Adjust the color to match your theme
-        startIcon={<AddIcon />} // Add icon for the plus symbol
-        onClick={handleClickOpen}
-        style={{
-          margin: "10px", // Add margin if needed
-          borderRadius: "25px", // Adjust as needed for oval shape
-          padding: "5px 10px", // Top/bottom padding and left/right padding
-          textTransform: "none", // Prevent uppercase transform
-        }}
-      >
-        NEW TRAINING
-      </Button>
+      <Tooltip title="Add training">
+        <IconButton aria-label="add" color="info" onClick={handleClickOpen}>
+          <AddIcon />
+        </IconButton>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>New Training</DialogTitle>
+        <DialogTitle>
+          New Training ({props.customer.firstname} {props.customer.lastname})
+        </DialogTitle>
         <DialogContent>
           <TextField
             margin="dense"
+            name="activity"
             label="Activity"
             value={training.activity}
-            onChange={(e) =>
-              setTraining({ ...training, activity: e.target.value })
-            }
+            onChange={handleCustomerChange}
             fullWidth
             variant="standard"
           />
 
           <TextField
             margin="dense"
+            name="duration"
             label="Duration"
             type="number" // Set the type to number
             value={training.duration}
-            onChange={(e) =>
-              setTraining({ ...training, duration: e.target.value })
-            }
+            onChange={handleCustomerChange}
             fullWidth
             variant="standard"
           />
-
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="customer-select-label">Customer Name</InputLabel>
-              <Select
-                labelId="customer-select-label"
-                id="customer-select"
-                value={training.customer}
-                label="Customer Name"
-                onClick={handleCustomerChange}
-              >
-                {customers?.map((customer) => (
-                  <MenuItem key={customer.id} value={customer.id}>
-                    {customer.firstname} {customer.lastname}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
 
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DateTimePicker"]}>

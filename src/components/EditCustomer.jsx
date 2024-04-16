@@ -43,6 +43,10 @@ export default function EditCustomer({ data, updatedCustomer }) {
     handleClose();
   };
 
+  const handleChange = (event) => {
+    setCustomer({ ...customer, [event.target.name]: event.target.value });
+  };
+
   return (
     <>
       <Tooltip title="Edit customer">
@@ -56,10 +60,9 @@ export default function EditCustomer({ data, updatedCustomer }) {
           <TextField
             margin="dense"
             label="First Name"
+            name="firstname"
             value={customer.firstname}
-            onChange={(e) =>
-              setCustomer({ ...customer, firstname: e.target.value })
-            }
+            onChange={handleChange}
             fullWidth
             variant="standard"
           />
@@ -67,10 +70,9 @@ export default function EditCustomer({ data, updatedCustomer }) {
           <TextField
             margin="dense"
             label="Last Name"
+            name="lastname"
             value={customer.lastname}
-            onChange={(e) =>
-              setCustomer({ ...customer, lastname: e.target.value })
-            }
+            onChange={handleChange}
             fullWidth
             variant="standard"
           />
@@ -78,10 +80,9 @@ export default function EditCustomer({ data, updatedCustomer }) {
           <TextField
             margin="dense"
             label="Street Address"
+            name="streetaddress"
             value={customer.streetaddress}
-            onChange={(e) =>
-              setCustomer({ ...customer, streetaddress: e.target.value })
-            }
+            onChange={handleChange}
             fullWidth
             variant="standard"
           />
@@ -89,10 +90,9 @@ export default function EditCustomer({ data, updatedCustomer }) {
           <TextField
             margin="dense"
             label="Postcode"
+            name="postcode"
             value={customer.postcode}
-            onChange={(e) =>
-              setCustomer({ ...customer, postcode: e.target.value })
-            }
+            onChange={handleChange}
             fullWidth
             variant="standard"
           />
@@ -100,8 +100,9 @@ export default function EditCustomer({ data, updatedCustomer }) {
           <TextField
             margin="dense"
             label="City"
+            name="city"
             value={customer.city}
-            onChange={(e) => setCustomer({ ...customer, city: e.target.value })}
+            onChange={handleChange}
             fullWidth
             variant="standard"
           />
@@ -109,10 +110,9 @@ export default function EditCustomer({ data, updatedCustomer }) {
           <TextField
             margin="dense"
             label="Email"
+            name="email"
             value={customer.email}
-            onChange={(e) =>
-              setCustomer({ ...customer, email: e.target.value })
-            }
+            onChange={handleChange}
             fullWidth
             variant="standard"
           />
@@ -120,10 +120,9 @@ export default function EditCustomer({ data, updatedCustomer }) {
           <TextField
             margin="dense"
             label="Phone number"
+            name="phone"
             value={customer.phone}
-            onChange={(e) =>
-              setCustomer({ ...customer, phone: e.target.value })
-            }
+            onChange={handleChange}
             fullWidth
             variant="standard"
           />

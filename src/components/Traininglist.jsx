@@ -67,7 +67,6 @@ function Traininglist() {
           padding: "20px",
         }}
       >
-        <AddTraining addTraining={addTraining} />
         <AgGridReact
           rowData={trainings}
           columnDefs={colDefs}

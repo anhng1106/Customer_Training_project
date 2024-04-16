@@ -8,11 +8,13 @@ import {
   updatedCustomers,
   deleteCustomer,
 } from "../customerapi";
+import { addTrainings } from "../trainingapi";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
+import AddTraining from "./AddTraining";
 
 function Customerlist() {
   const [customers, setCustomers] = useState([]);
@@ -24,6 +26,12 @@ function Customerlist() {
     { field: "streetaddress", filter: true, width: 200 },
     { field: "postcode", filter: true, width: 200 },
     { field: "city", filter: true, width: 200 },
+    {
+      cellRenderer: (params) => (
+        <AddTraining addTraining={addTraining} customer={params.data} />
+      ),
+      width: 120,
+    },
     {
       cellRenderer: (params) => (
         <EditCustomer data={params.data} updatedCustomer={updatedCustomer} />
@@ -80,6 +88,13 @@ function Customerlist() {
         .then(() => fetchCustomers())
         .catch((err) => console.log(err));
     }
+  };
+
+  //add training to customer
+  const addTraining = (trainingData) => {
+    addTrainings(trainingData)
+      .then(() => fetchCustomers())
+      .catch((err) => console.log(err));
   };
 
   return (
