@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
@@ -17,6 +17,7 @@ import EditCustomer from "./EditCustomer";
 import AddTraining from "./AddTraining";
 
 function Customerlist() {
+  const gridApiRef = useRef(null);
   const [customers, setCustomers] = useState([]);
   const [colDefs, setColDefs] = useState([
     { field: "firstname", filter: true, floatingFilter: true },
@@ -97,6 +98,22 @@ function Customerlist() {
       .catch((err) => console.log(err));
   };
 
+  // New function to trigger CSV export
+  const exportToCSV = () => {
+    const columnsToExport = colDefs
+      .filter((colDef) => !colDef.cellRenderer) // Filter out columns with cellRenderers
+      .map((colDef) => colDef.field); // Map to get only the field names
+
+    gridApiRef.current.exportDataAsCsv({
+      columnKeys: columnsToExport, // Only export columns that have field names
+    });
+  };
+
+  // Add this function to the onGridReady property of the AgGridReact component
+  const onGridReady = (params) => {
+    gridApiRef.current = params.api;
+  };
+
   return (
     <>
       <h2 style={{ textAlign: "center", marginTop: "70px", color: "#034999" }}>
@@ -110,7 +127,8 @@ function Customerlist() {
           padding: "10px",
         }}
       >
-        <AddCustomer addCustomer={addCustomer} />
+        <AddCustomer addCustomer={addCustomer} />{" "}
+        <button onClick={exportToCSV}>Export CSV</button>{" "}
         <AgGridReact
           rowData={customers}
           columnDefs={colDefs}
@@ -119,6 +137,7 @@ function Customerlist() {
           onFirstDataRendered={(params) => {
             params.api.sizeColumnsToFit();
           }}
+          onGridReady={onGridReady}
         />
       </div>
     </>
