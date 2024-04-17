@@ -15,8 +15,9 @@ function Calendar() {
     try {
       const data = await getTrainings();
       const formattedTrainings = data.map((training) => {
+        const title = `${training.activity} / ${training.customer.firstname} ${training.customer.lastname} `;
         return {
-          title: training.activity,
+          title: title,
           start: training.date, // Assuming 'date' is a proper ISO string or Date object.
           end: new Date(
             new Date(training.date).getTime() + training.duration * 60000
