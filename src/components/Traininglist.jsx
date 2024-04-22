@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
-import { getTrainings, addTrainings } from "../trainingapi";
+import { getTrainings, deleteTrainings } from "../trainingapi";
 import dayjs from "dayjs";
-
-import AddTraining from "./AddTraining";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Traininglist() {
   const [trainings, setTrainings] = useState([]);
@@ -24,6 +25,20 @@ function Traininglist() {
       headerName: "Customer Name",
       filter: true,
       floatingFilter: true,
+    },
+    {
+      cellRenderer: (params) => (
+        <Tooltip title="Delete training">
+          <IconButton
+            aria-label="delete"
+            color="error"
+            onClick={() => deleteTraining(params.data.id)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ),
+      width: 150,
     },
   ]);
 
@@ -45,6 +60,15 @@ function Traininglist() {
         setTrainings(newData);
       })
       .catch((err) => console.log(err));
+  };
+
+  //delete trainings
+  const deleteTraining = (id) => {
+    if (window.confirm("Are you sure?")) {
+      deleteTrainings(id)
+        .then(() => fetchTrainings())
+        .catch((err) => console.log(err));
+    }
   };
 
   return (

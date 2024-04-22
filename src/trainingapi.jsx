@@ -23,3 +23,14 @@ export const addTrainings = (newTraining) => {
     return response.json();
   });
 };
+
+export const deleteTrainings = (id) => {
+  return fetch(
+    "https://customerrestservice-personaltraining.rahtiapp.fi/api/trainings/" +
+      id,
+    { method: "DELETE" }
+  ).then((response) => {
+    if (!response.ok) throw new Error("Error in deletion: " + error.statusText);
+    return response.json();
+  });
+};
