@@ -28,7 +28,16 @@ export default function AddCustomer({ addCustomer }) {
   };
 
   const handleSave = () => {
-    addCustomer(customer);
+    addCustomer(customer); // Call to add the customer
+    setCustomer({
+      firstname: "",
+      lastname: "",
+      streetaddress: "",
+      postcode: "",
+      city: "",
+      email: "",
+      phone: "",
+    }); // Reset the customer state to clear the form
     handleClose();
   };
 

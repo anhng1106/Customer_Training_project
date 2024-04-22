@@ -1,6 +1,6 @@
 export const getCustomers = () => {
   return fetch(
-    "https://customerrestservice-personaltraining.rahtiapp.fi/api/customers"
+    "https://customerrestservice-personaltraining.rahtiapp.fi/api/customers",
   ).then((response) => {
     if (!response.ok) {
       throw new Error("Error in fetch " + response.statusText);
@@ -17,7 +17,7 @@ export const addCustomers = (newCustomer) => {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(newCustomer),
-    }
+    },
   ).then((response) => {
     if (!response.ok) throw new Error("Error when adding a new customer");
     return response.json();
