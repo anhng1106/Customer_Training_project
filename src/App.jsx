@@ -112,10 +112,10 @@ function App() {
         </Menu>
 
         <Routes>
-          <Route path="/" exact Component={Customerlist} />
-          <Route path="/traininglist" exact Component={Traininglist} />
-          <Route path="/calendar" exact Component={Calendar} />
-          <Route path="/statistic" exact Component={Statistic} />
+          <Route exact path="/" Component={Customerlist} />
+          <Route exact path="/traininglist" Component={Traininglist} />
+          <Route exact path="/calendar" Component={Calendar} />
+          <Route exact path="/statistic" Component={Statistic} />
           <Route Component={Error} />
         </Routes>
       </Box>
