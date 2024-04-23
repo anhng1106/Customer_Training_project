@@ -5,4 +5,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "/Customer_Training_project/",
   plugins: [react()],
+  test: {
+    globals: true,
+    environment: "jsdom",
+  },
 });

@@ -1,7 +1,6 @@
 {
   "name": "customer-training",
-  "private": true,
-  "homepage": "https://anhng1106.github.io/Customer_Training_project/",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -12,6 +11,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
+  "homepage": "https://anhng1106.github.io/Customer_Training_project/",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
