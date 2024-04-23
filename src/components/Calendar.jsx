@@ -18,9 +18,9 @@ function Calendar() {
         const title = `${training.activity} / ${training.customer.firstname} ${training.customer.lastname} `;
         return {
           title: title,
-          start: training.date, // Assuming 'date' is a proper ISO string or Date object.
+          start: training.date,
           end: new Date(
-            new Date(training.date).getTime() + training.duration * 60000
+            new Date(training.date).getTime() + training.duration * 60000,
           ), // Add duration to start date.
           // other event properties
         };
