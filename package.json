@@ -2,6 +2,7 @@
   "name": "customer-training",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://anhng1106.github.io/Customer_Training_project/",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -46,5 +47,5 @@
     "vite": "^5.2.8",
     "vitest": "^1.4.0"
   },
-  "homepage": "https://anhng1106.github.io/Customer_Training_project/"
+
 }
