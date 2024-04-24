@@ -27,8 +27,8 @@ function Statistic() {
     <div style={{ textAlign: "center" }}>
       <h2>Training Minutes by Activity</h2>
       <BarChart
-        width={1200}
-        height={600}
+        width={1000}
+        height={400}
         data={chartData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
