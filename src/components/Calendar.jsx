@@ -3,6 +3,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid"; // Import dayGridPlugin
 import { useState, useEffect } from "react";
 import { getTrainings } from "../trainingapi";
+import dayjs from "dayjs";
 
 function Calendar() {
   const [trainings, setTrainings] = useState([]);
@@ -18,11 +19,9 @@ function Calendar() {
         const title = `${training.activity} / ${training.customer.firstname} ${training.customer.lastname} `;
         return {
           title: title,
-          start: training.date,
+          start: dayjs(training.date).format(),
           end: new Date(
-            new Date(training.date).getTime() + training.duration * 60000,
-          ), // Add duration to start date.
-          // other event properties
+              new Date(training.date).getTime() + training.duration * 60000),
         };
       });
       setTrainings(formattedTrainings);
@@ -42,6 +41,16 @@ function Calendar() {
           left: "prev,next today",
           center: "title",
           right: "dayGridMonth,timeGridWeek,timeGridDay",
+        },
+        slotLabelFormat: { // for time grid views
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
+        },
+        eventTimeFormat: { // for event times
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false
         },
         events: trainings, // Assign the formatted training data as events
       });
