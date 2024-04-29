@@ -34,7 +34,7 @@ function Statistic() {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="activity" />
-        <YAxis />
+        <YAxis label={{ value: 'Duration (min)', angle: -90, position: 'insideLeft' }}/>
         <Tooltip />
         <Bar dataKey="totalMinutes" fill="#F8C471" />
       </BarChart>
